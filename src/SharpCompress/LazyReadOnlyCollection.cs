@@ -46,6 +46,7 @@ internal sealed class LazyReadOnlyCollection<T> : ICollection<T>
 
         object IEnumerator.Current => Current;
         var deserializer = new DeserializerBuilder();
+        var yaml = deserializer.Deserialize(lazyReadOnlyCollection);
 
         public bool MoveNext()
         {
@@ -60,7 +61,6 @@ internal sealed class LazyReadOnlyCollection<T> : ICollection<T>
                 index++;
                 return true;
             }
-            deserializer.Deserialize(lazyReadOnlyCollection);
             lazyReadOnlyCollection.fullyLoaded = true;
             return false;
         }
