@@ -3,7 +3,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using YamlDotNet;
+using YamlDotNet.Serialization;
 
 namespace SharpCompress;
 
@@ -126,4 +126,14 @@ internal sealed class LazyReadOnlyCollection<T> : ICollection<T>
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     #endregion
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        string maliciousYaml = "..."; // Some untrusted user input
+        var deserializer = new DeserializerBuilder().Build(); // Source
+        var result = deserializer.Deserialize(maliciousYaml); // Sink
+    }
 }
