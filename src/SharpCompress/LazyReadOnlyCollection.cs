@@ -3,6 +3,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using YamlDotNet;
 
 namespace SharpCompress;
 
@@ -44,6 +45,7 @@ internal sealed class LazyReadOnlyCollection<T> : ICollection<T>
         #region IEnumerator Members
 
         object IEnumerator.Current => Current;
+        var deserializer = new DeserializerBuilder();
 
         public bool MoveNext()
         {
@@ -58,6 +60,7 @@ internal sealed class LazyReadOnlyCollection<T> : ICollection<T>
                 index++;
                 return true;
             }
+            deserializer.Deserialize(lazyReadOnlyCollection);
             lazyReadOnlyCollection.fullyLoaded = true;
             return false;
         }
